@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33122.133
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopTenHashTags", "TopTenHashTags\TopTenHashTags.csproj", "{1020C9DE-5D2F-434D-8AF7-885984502AB4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopTenHashTags.Tests", "TopTenHashTags.Tests\TopTenHashTags.Tests.csproj", "{58677B17-2D85-4FF1-93A0-931B9A29B8F7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1020C9DE-5D2F-434D-8AF7-885984502AB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1020C9DE-5D2F-434D-8AF7-885984502AB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1020C9DE-5D2F-434D-8AF7-885984502AB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1020C9DE-5D2F-434D-8AF7-885984502AB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58677B17-2D85-4FF1-93A0-931B9A29B8F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58677B17-2D85-4FF1-93A0-931B9A29B8F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58677B17-2D85-4FF1-93A0-931B9A29B8F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58677B17-2D85-4FF1-93A0-931B9A29B8F7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {74325A29-23E7-40CE-AF09-62BEF5E7303C}
+	EndGlobalSection
+EndGlobal
