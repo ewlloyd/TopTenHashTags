@@ -6,7 +6,16 @@ namespace TopTenHashTags
     public interface ILeaderboard<T>
         where T : IComparable<T>
     {
-        void Tally(T key);
+        void TallyHashtag(T key);
+        void TallyTweet();
+        ImmutableList<IResult<T>> Results { get; }
+        int TotalTweets { get; }
+        IResults<T> GetResults();
+    }
+
+    public interface IResults<T>
+    {
+        int TotalTweets { get; }
         ImmutableList<IResult<T>> Results { get; }
     }
 
@@ -27,6 +36,7 @@ namespace TopTenHashTags
         private readonly int _maxCount;
         private List<Entry> _leaderboard;
         private readonly object _leaderboardLock = new();
+        private int _totalTweets;
 
         public Leaderboard(int maxCount)
         {
@@ -34,12 +44,24 @@ namespace TopTenHashTags
             _leaderboard = new List<Entry>(_maxCount);
         }
 
+        public int TotalTweets => _totalTweets;
+
         /// <summary>
         /// The current leaderboard results
         /// </summary>
         public ImmutableList<IResult<T>> Results { get; private set; } = ImmutableList<IResult<T>>.Empty;
 
-        public void Tally(T key)
+        public IResults<T> GetResults()
+        {
+            return new ResultDto(_totalTweets, Results);
+        }
+
+        public void TallyTweet()
+        {
+            Interlocked.Increment(ref _totalTweets);
+        }
+
+        public void TallyHashtag(T key)
         {
             var newCount = _allEntries.AddOrUpdate(key,
                 _ => new Entry(key),
@@ -65,7 +87,7 @@ namespace TopTenHashTags
 
                 // NOTE that we're only sorting the top _maxcount entries plus the most-recently updated entry:
                 _leaderboard = _leaderboard.Order().Take(_maxCount).ToList();
-                Results = _leaderboard.Select(entry1 => new Result(entry1.Key, entry1.Count)).ToImmutableList<IResult<T>>();
+                Results = _leaderboard.Select(entry1 => new HashtagResult(entry1.Key, entry1.Count)).ToImmutableList<IResult<T>>();
             }
             finally
             {
@@ -73,12 +95,14 @@ namespace TopTenHashTags
             }
         }
 
+        public record ResultDto(int TotalTweets, ImmutableList<IResult<T>> Results) : IResults<T>;
+
         /// <summary>
         /// A DTO for the output results
         /// </summary>
         /// <param name="Value">The value we're maintaining a census of</param>
         /// <param name="Count">The current tally of this value</param>
-        public record Result(T Value, int Count) : IResult<T>;
+        public record HashtagResult(T Value, int Count) : IResult<T>;
 
         /// <summary>
         /// An inner class that represents a candidate entry on the leaderboard.

@@ -26,20 +26,20 @@ public class LeaderboardTests
     public void LeaderboardConsumesData()
     {
         var sut = new Leaderboard<string>(3);
-        sut.Tally("a");
-        sut.Tally("c");
-        sut.Tally("c");
-        sut.Tally("b");
-        sut.Tally("b");
-        sut.Tally("b");
-        sut.Tally("z");
+        sut.TallyHashtag("a");
+        sut.TallyHashtag("c");
+        sut.TallyHashtag("c");
+        sut.TallyHashtag("b");
+        sut.TallyHashtag("b");
+        sut.TallyHashtag("b");
+        sut.TallyHashtag("z");
 
         foreach (var result in sut.Results)
             _testOutputHelper.WriteLine(result.ToString());
 
         Assert.Equal(3, sut.Results.Count);
-        Assert.Equal(new Leaderboard<string>.Result("b", 3), sut.Results[0]);
-        Assert.Equal(new Leaderboard<string>.Result("c", 2), sut.Results[1]);
-        Assert.Equal(new Leaderboard<string>.Result("a", 1), sut.Results[2]);
+        Assert.Equal(new Leaderboard<string>.HashtagResult("b", 3), sut.Results[0]);
+        Assert.Equal(new Leaderboard<string>.HashtagResult("c", 2), sut.Results[1]);
+        Assert.Equal(new Leaderboard<string>.HashtagResult("a", 1), sut.Results[2]);
     }
 }

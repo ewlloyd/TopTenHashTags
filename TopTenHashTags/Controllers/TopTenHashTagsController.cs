@@ -17,6 +17,6 @@ namespace TopTenHashTags.Site.Controllers
         }
 
         [HttpGet(Name = "TopTenHashTags")]
-        public IEnumerable<IResult<string>> Get() => _leaderboard.Results;
+        public IResults<string> Get() => _leaderboard.GetResults();
     }
 }

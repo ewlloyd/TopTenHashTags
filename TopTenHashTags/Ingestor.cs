@@ -55,14 +55,13 @@ internal class Ingestor : BackgroundService
             await using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
             using var reader = new StreamReader(stream);
 
-            var lineNumber = 0;
             while (!cancellationToken.IsCancellationRequested)
             {
                 var line = await reader.ReadLineAsync(cancellationToken);
                 
                 if (string.IsNullOrWhiteSpace(line))
                 {
-                    _logger.LogInformation("Line #{lineNumber} of the stream is blank.", lineNumber);
+                    _logger.LogInformation("Line #{TotalTweets} of the stream is blank.", _leaderboard.TotalTweets);
                     continue;
                 }
 
@@ -73,11 +72,11 @@ internal class Ingestor : BackgroundService
                     _logger.LogInformation("#{tags}", string.Join(", #", tags.Select(tag => tag.ToString())));
                     foreach (var hashtag in tags)
                     {
-                        _leaderboard.Tally(hashtag.Tag);
+                        _leaderboard.TallyHashtag(hashtag.Tag);
                     }
                 }
 
-                lineNumber++;
+                _leaderboard.TallyTweet();
             }
         }
         catch (TaskCanceledException)
